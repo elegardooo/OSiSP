@@ -2,11 +2,20 @@
 
 #include "stdio.h"
 #include "stdlib.h"
-#include "unistd.h"
 #include "string.h"
 
-#include "sys/stat.h"
-#include "dirent.h"
+#include <dirent.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
+#include <getopt.h>
+
+extern int scandir(const char *dirp, struct dirent ***namelist,
+            int (*filter)(const struct dirent*),
+            int (*compar)(const struct dirent**, const struct dirent**));
+
+extern int lstat(const char* restrict path, struct stat *restrict buf);
 
 int compare_lc(const struct dirent** a, const struct dirent** b) {
    return strcoll((*a)->d_name, (*b)->d_name);
